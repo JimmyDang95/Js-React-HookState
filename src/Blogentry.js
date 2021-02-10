@@ -6,10 +6,11 @@ export const SuperFancyBlogEntry = styled.article`
 background-color: hotpink;
 h3  {
 background-color: lightblue;
+margin: 
 }
 `
 
-function Blogentry({blogId, author, topic, blogInput }) {
+function Blogentry({blogId, author, topic, blogInput, onDelete}) {
     return (
         <SuperFancyBlogEntry>
             <h3>{topic}</h3>
@@ -18,6 +19,7 @@ function Blogentry({blogId, author, topic, blogInput }) {
                 {author}
                 {blogId}
             </p>
+            <button onclick={onDelete}>Delete Blogentry</button>
         </SuperFancyBlogEntry>)
 }
 
