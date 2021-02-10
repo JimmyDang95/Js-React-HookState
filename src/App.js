@@ -3,6 +3,7 @@ import './App.css';
 import Blogentry from "./Blogentry";
 import {SuperFancyButton} from "./SuperFancyButton";
 import {useState} from "react";
+import AddBlogForm from "./AddBlogForm";
 
 function App() {
     const [blogentries, setBlogentries] = useState([]);
@@ -43,7 +44,7 @@ function App() {
                     author: "Maria",
                     topic: "Tech"
                 }
-            ])}>Press me for nothing</SuperFancyButton>
+            ])}>Load Blogentries</SuperFancyButton>
             <button onClick={() => {
                 const updatedList = [...blogentries, {id: "new-id", author: "new b", topic: "super topic"}];
                 setBlogentries(updatedList)
@@ -51,6 +52,8 @@ function App() {
                 Add Blogentry
             </button>
 
+            <AddBlogForm onAdd={newBlogentry =>
+                setBlogentries([...blogentries, newBlogentry])}/>
         </>
     );
 }
