@@ -2,19 +2,40 @@ import logo from './logo.svg';
 import './App.css';
 import Blogentry from "./Blogentry";
 import {SuperFancyButton} from "./SuperFancyButton";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import AddBlogForm from "./AddBlogForm";
+import axios from "axios";
+import {loadUserApi} from "./user-service";
+
+
 
 function App() {
     const [blogentries, setBlogentries] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        loadUserApi()
+;    },[]);
+
+    function loadUser(){
+        setLoading(true);
+        loadUserApi().then(result => setBlogentries(result.data))
+            .then(() => setLoading(false));
+    }
+
     return (
         <>
+            {loading && <div>Loading User</div>}
+            <button onClick={loadUser}>
+                Load Recent User
+            </button>
             <div className="App">
-                <div>
+                <div className="users">
                     {blogentries.map(blogentry => <Blogentry key={blogentry.id}
-                                                             blogInput={"Blog " + blogentry.blogInput}
-                                                             author={"Author: " + blogentry.author}
-                                                             topic={"Topic: " + blogentry.topic}
+                                                             username={" Username : " + blogentry.username}
+                                                             website={"Website: " + blogentry.website}
+                                                             email={" Email: " + blogentry.email}
+                                                             phone={" Phone: " + blogentry.phone}
                                                              onDelete={() => {
                     const updatedList = blogentries.filter(item => item.id !== blogentries.id);
                     setBlogentries(updatedList)
@@ -22,36 +43,6 @@ function App() {
                 }}/>)}
                 </div>
             </div>
-            <SuperFancyButton onClick={() => setBlogentries([
-                {
-                    blogInput: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" +
-                        " tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                    id: "1",
-                    author: "Jimmy",
-                    topic: "Sport"
-                },
-                {
-                    blogInput: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" +
-                        " tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                    id: "2",
-                    author: "Martin",
-                    topic: "Weather"
-                },
-                {
-                    blogInput: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod" +
-                        " tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                    id: "3",
-                    author: "Maria",
-                    topic: "Tech"
-                }
-            ])}>Load Blogentries</SuperFancyButton>
-            <button onClick={() => {
-                const updatedList = [...blogentries, {id: "new-id", author: "new b", topic: "super topic"}];
-                setBlogentries(updatedList)
-            }}>
-                Add Blogentry
-            </button>
-
             <AddBlogForm onAdd={newBlogentry =>
                 setBlogentries([...blogentries, newBlogentry])}/>
         </>

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: #F6F6F6;
 }
 
 .App-logo {
@@ -37,6 +38,6 @@
   }
 }
 
-.blogentry{
-  color: hotpink;
+.users{
+  border: 5px solid black;
 }

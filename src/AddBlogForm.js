@@ -3,8 +3,8 @@ import {v4 as uuidv4} from 'uuid';
 
 function AddStudentForm({onAdd}) { //Erwartet eine Funktion namens onAdd
 
-    const [author, setAuthor] = useState("some author name");
-    const [topic, setTopic] = useState("");
+    const [userName, setUserName] = useState("some username");
+    const [email, setEmail] = useState("example@example.com");
 
 
     return <form onSubmit={event => {
@@ -12,25 +12,25 @@ function AddStudentForm({onAdd}) { //Erwartet eine Funktion namens onAdd
         onAdd(
             {
                 id: uuidv4(),
-                author: author,
-                topic: topic
+                username: userName,
+                email: email
             })
-        setAuthor("")
-        setTopic("")
+        setUserName("")
+        setEmail("")
     }}>
 
         <label>
-            Author
-            <input value={author} onChange={event => setAuthor(event.target.value)}/>
+            Username
+            <input value={userName} onChange={event => setUserName(event.target.value)}/>
         </label>
         <label>
-            Topic
-            <input value={topic} onChange={event => setTopic(event.target.value)}/>
+            Email
+            <input value={email} onChange={event => setEmail(event.target.value)}/>
         </label>
 
 
         <button>
-            Add Student
+            Add new User
         </button>
     </form>
 }

@@ -1,25 +1,42 @@
 import styled from 'styled-components/macro'
 import {css} from 'styled-components'
+import {useState} from "react";
 
 
 export const SuperFancyBlogEntry = styled.article`
-background-color: hotpink;
+color: white;
+background-color: #EA5455;
 h3  {
-background-color: lightblue;
-margin: 
+background-color: #2D4059;
 }
+button {
+border-radius: 12px;
+}
+button:hover{
+background-color: #FFB400;
+}
+.grow:hover {
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3);
+}
+
 `
 
-function Blogentry({blogId, author, topic, blogInput, onDelete}) {
+function Blogentry({phone, username, email, website, onDelete}) {
     return (
         <SuperFancyBlogEntry>
-            <h3>{topic}</h3>
+            <h3 className="websiteHeading">{website}</h3>
             <p>
-                {blogInput}
-                {author}
-                {blogId}
+                {username}
+                <br/>
+                {email}
+                <br/>
+                {phone}
             </p>
-            <button onclick={onDelete}>Delete Blogentry</button>
+            <button className={"grow"} onClick={onDelete}>Delete User</button>
+            <button className={"grow"}>Edit User</button>
+            <button className={"grow"}>Report User</button>
         </SuperFancyBlogEntry>)
 }
 
